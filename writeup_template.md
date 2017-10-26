@@ -72,36 +72,41 @@ The code for my perspective transform includes a function called `warp()`, which
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
-![alt text][image4]
+![alt text](https://github.com/solo2002/CarND-Advanced-Lane-Lines/blob/master/output_images/warp.png?raw=true)
 
-#### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
+#### 4. Identified lane-line pixels and fit their positions with a polynomial?
 
-Then I did some other stuff and fit my lane lines with a 2nd order polynomial kinda like this:
+In code cell 15, I fit my lane lines with a 2nd order polynomial kinda like this:
 
-![alt text][image5]
+First, calculating the histogram of the image, and the hightest 2 peaks correspond to lane lines. Then siliding-window methond is using to find lane lines. Finally, these two steps approaches are implemented for each frame of images. Here are the example images of these: 
 
-#### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+![Histogram](https://github.com/solo2002/CarND-Advanced-Lane-Lines/blob/master/output_images/histogram.png?raw=true)
 
-I did this in lines # through # in my code in `my_other_file.py`
+![Fit-line](https://github.com/solo2002/CarND-Advanced-Lane-Lines/blob/master/output_images/fit-poly-line.png?raw=true)
+
+
+#### 5. Calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
+
+I did this in code cell 18 in the file "find_lane.ipynb". Generally, the curvature for left and right lane lines are determined by their radius, respectively. Then the relation between pixes and meters is calculated based on the US high way specification: 700 pixes vs 3.7 meters.
 
 #### 6. Provide an example image of your result plotted back down onto the road such that the lane area is identified clearly.
 
 I implemented this step in lines # through # in my code in `yet_another_file.py` in the function `map_lane()`.  Here is an example of my result on a test image:
 
-![alt text][image6]
+![Lane-line](https://github.com/solo2002/CarND-Advanced-Lane-Lines/blob/master/output_images/find-line.png?raw=true)
 
 ---
 
 ### Pipeline (video)
 
-#### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
+#### 1. Provide a link to your final video output. 
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](https://youtu.be/p8N9F8qBq5M)
 
 ---
 
 ### Discussion
 
-#### 1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
+#### 1. Implementation and further challenges
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Since I use a queue structure to save lane lines curvature from a certain number frames of image, and remove the first one as well as insert a new one when there is a significant difference. The limitation of this implementation is that it is a kind of delayed to reflect the change. Therefore, it does not work well when the road curve is dramatially changed, just like the challenge video.     
