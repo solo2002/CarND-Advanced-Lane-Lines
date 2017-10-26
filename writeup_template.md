@@ -34,26 +34,30 @@ Image
 
 #### 1. Computed the camera matrix and distortion coefficients. Provide an example of a distortion corrected calibration image.
 
-The code for this step is contained in the first thress code cells of the IPython notebook located in "find_lane.ipynb".
+The code for this step is contained in the first 5 code cells of the IPython notebook located in "find_lane.ipynb".
 
 I start by preparing "object points", which will be the (x, y, z) coordinates of the chessboard corners in the world. Here I am assuming the chessboard is fixed on the (x, y) plane at z=0, such that the object points are the same for each calibration image.  Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be appended with a copy of it every time I successfully detect all chessboard corners in a test image.  `imgpoints` will be appended with the (x, y) pixel position of each of the corners in the image plane with each successful chessboard detection.  
 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result: 
 
-![Calibrate Camera & Undistort][https://github.com/solo2002/CarND-Advanced-Lane-Lines/blob/master/camera_cal/calibration1.jpg?raw=true]
+![alt text][image1]
 
 ### Pipeline (single images)
 
-#### 1. Provide an example of a distortion-corrected image.
+#### 1. An example of a distortion-corrected image.
 
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one:
-![alt text][image2]
+![alt text](https://github.com/solo2002/CarND-Advanced-Lane-Lines/blob/master/output_images/undisort.png?raw=true)
 
-#### 2. Describe how (and identify where in your code) you used color transforms, gradients or other methods to create a thresholded binary image.  Provide an example of a binary image result.
+#### 2. Examples of color transforms, gradients or other methods to create a thresholded binary image. 
 
-I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at lines # through # in `another_file.py`).  Here's an example of my output for this step.  (note: this is not actually from one of the test images)
+I tried several combinations of color and gradient thresholds to generate a binary image (please see code sells from 6 to 13 in "find_lane.ipynb").  Here's an example of combinaing red channel and S channel.
 
-![alt text][image3]
+![alt text](https://github.com/solo2002/CarND-Advanced-Lane-Lines/blob/master/output_images/r-s-channel.png?raw=true)
+
+Here is the combination of sobel_x, S channel, magnitude of the gradient, and direction of the gradient.
+
+![alt text](https://github.com/solo2002/CarND-Advanced-Lane-Lines/blob/master/output_images/combined.png?raw=true)
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
