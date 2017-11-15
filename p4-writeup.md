@@ -65,10 +65,10 @@ The code for my perspective transform includes a function called `warp()`, which
 
 | Source        | Destination   | 
 |:-------------:|:-------------:| 
-| 550, 480      | 200, 50        | 
-| 720, 480      | 200, 600      |
-| 315, 645     | 1000, 50      |
-| 1000, 645      | 1000, 600        |
+| 490, 480      | 0, 0        | 
+| 810, 480      | 1280, 0      |
+| 1250, 720     | 1250, 720      |
+| 0, 720      | 40, 720        |
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
 
@@ -101,12 +101,28 @@ I implemented this step in lines # through # in my code in `yet_another_file.py`
 
 #### 1. Provide a link to your final video output. 
 
-Here's a [link to my video result](https://youtu.be/p8N9F8qBq5M)
+Here's a [link to my video result](https://youtu.be/49TTZed7nuA)
 
 ---
 
 ### Discussion
 
-#### 1. Implementation and further challenges
+#### 1. Implementation 
 
-Since I use a queue structure to save lane lines curvature from a certain number frames of image, and remove the first one as well as insert a new one when there is a significant difference. The limitation of this implementation is that it is a kind of delayed to reflect the change. Therefore, it does not work well when the road curve is dramatially changed, just like the challenge video.     
+Previouly, I used a queue structure to save lane lines curvature from a certain number frames of image, and remove the first one as well as insert a new one when there is a significant difference. The limitation of this implementation is that it is a kind of delayed to reflect the change. Therefore, it does not work well when the road curve is dramatially changed, just like the challenge video. Now it was improved as follows. 
+
+The L-channel of LUV is used to detect white lane, and the B-channel of LAB is used to recoginize yellow lane. 
+
+Then I further improved the algorithm by doing following:
+
+##### a. If lines are not detected, sliding window search is used to find the line.
+
+##### b. If lines are not detected, only around region is searched (here +/- 25 pixel is used).
+
+##### c. Averge lines based on last 10 frames, so lines would change more smoothly  
+
+#### 2. Limitation 
+
+Most of parameters used in this project is hard-coded. For instance, the threshold values, the region of image, etc. Therefore, if given another different type of video, the pipeline may fail. In addition, the accuracy could be reduced when calculating radius of curvature and offset.
+
+Moreover, the process of tuning of parameters, including the threshold values, and combinations of image processing filters, is very time consuming.    
